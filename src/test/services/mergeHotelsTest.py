@@ -122,5 +122,9 @@ paperflies_hotel = PaperfliesSupplierSchema(**{
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
 # print(MergeHotels.merge_location_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
-print(MergeHotels.merge_description_data(acme_hotel=acme_hotel,
+# print(MergeHotels.merge_description_data(acme_hotel=acme_hotel,
+#       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
+# print(MergeHotels.merge_amenities_data(acme_hotel=acme_hotel,
+#       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
+print(MergeHotels.merge_images_data(acme_hotel=acme_hotel,
       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))

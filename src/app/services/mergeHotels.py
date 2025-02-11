@@ -1,8 +1,9 @@
 
+import re
 from typing import List, Optional
 from app.utils import SupplierChoice, fetch_suppliers_and_filter
 from app.schemas.suppliers import AcmeSupplierSchema, PatagoniaSupplierSchema, PaperfliesSupplierSchema
-from app.schemas import MergedHotelSchema, MergedHotelLocationSchema
+from app.schemas import MergedHotelSchema, MergedHotelLocationSchema, MergedHotelAmenitiesSchema, MergedHotelImagesSchema, MergedHotelImageSchema
 
 
 class MergeHotels:
@@ -47,9 +48,56 @@ class MergeHotels:
     @staticmethod
     def merge_description_data(acme_hotel: AcmeSupplierSchema, patagonia_hotel: PatagoniaSupplierSchema, paperflies_hotel: PaperfliesSupplierSchema) -> Optional[str]:
         return MergeHotels.get_longest_string(acme_hotel.Description, patagonia_hotel.info, paperflies_hotel.details)
-    
+
     @staticmethod
-    
+    def merge_amenities_data(acme_hotel: AcmeSupplierSchema, patagonia_hotel: PatagoniaSupplierSchema, paperflies_hotel: PaperfliesSupplierSchema) -> Optional[MergedHotelAmenitiesSchema]:
+        # general taken from acme Facilities, and paperflies.amenities.general
+
+        general = set()
+        for gn in acme_hotel.Facilities:
+            general.add(MergeHotels.camel_to_spaces(gn.strip()))
+        for gn in paperflies_hotel.amenities.general:
+            general.add(MergeHotels.camel_to_spaces(gn.strip()))
+
+        # room taken from patagonia amenities and paerflies.amenities.room
+        room = set()
+        for rm in patagonia_hotel.amenities:
+            room.add(MergeHotels.camel_to_spaces(rm.strip()))
+        for rm in paperflies_hotel.amenities.room:
+            room.add(MergeHotels.camel_to_spaces(rm.strip()))
+
+        return MergedHotelAmenitiesSchema(general=list(general), room=list(room))
+
+    @staticmethod
+    def merge_images_data(acme_hotel: AcmeSupplierSchema, patagonia_hotel: PatagoniaSupplierSchema, paperflies_hotel: PaperfliesSupplierSchema) -> Optional[MergedHotelImagesSchema]:
+        rooms = []  # from patagonia and paperflies
+        for room in patagonia_hotel.images.rooms:
+            rooms.append(MergedHotelImageSchema(
+                link=room.url, description=room.description))
+        for room in paperflies_hotel.images.rooms:
+            rooms.append(MergedHotelImageSchema(
+                link=room.link, description=room.caption))
+        # print(rooms)
+
+        sites = []  # from paperflies
+        for site in paperflies_hotel.images.site:
+            sites.append(MergedHotelImageSchema(
+                link=site.link, description=site.caption))
+
+        # print(sites)
+
+        amenities = []  # from patagonia
+        for amenity in patagonia_hotel.images.amenities:
+            amenities.append(MergedHotelImageSchema(
+                link=amenity.url, description=amenity.description))
+        # print(amenities)
+
+        # return MergedHotelImagesSchema(rooms=[], images=[], amenities=[])
+        return MergedHotelImagesSchema(rooms=rooms, site=sites, amenities=amenities)
+
+    @staticmethod
+    def camel_to_spaces(s: str):
+        return re.sub(r'([a-z])([A-Z])', r'\1 \2', s).lower()
 
     @staticmethod
     def get_longest_string(*args: Optional[str]) -> Optional[str]:
