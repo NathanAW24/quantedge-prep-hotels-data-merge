@@ -5,7 +5,7 @@ from pydantic import BaseModel
 class MergedHotelLocationSchema(BaseModel):
     lat: Optional[float]
     lng: Optional[float]
-    address: Optional[float]
+    address: Optional[str]
     city: Optional[str]
     country: Optional[str]
 

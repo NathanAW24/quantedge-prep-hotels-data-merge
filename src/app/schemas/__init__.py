@@ -1,1 +1,1 @@
-from .mergedHotelSchema import MergedHotelSchema, MergedHotelRequest
+from .mergedHotelSchema import MergedHotelSchema, MergedHotelRequest, MergedHotelLocationSchema, MergedHotelAmenitiesSchema, MergedHotelImageSchema, MergedHotelImagesSchema

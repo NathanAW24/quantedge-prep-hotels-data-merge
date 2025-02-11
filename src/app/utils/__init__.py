@@ -1,1 +1,1 @@
-from .fetchSupplier import SupplierChoice, fetch_supplier
+from .fetchSupplier import SupplierChoice, fetch_supplier, fetch_suppliers_and_filter
