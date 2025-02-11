@@ -1,25 +1,25 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 
 class PaperfliesSupplierImageSchema(BaseModel):
-    link: str
-    caption: str
+    link: Optional[str]
+    caption: Optional[str]
 
 
 class PaperfliesSupplierImagesSchema(BaseModel):
-    rooms: List[PaperfliesSupplierImageSchema]
-    site: List[PaperfliesSupplierImageSchema]
+    rooms: Optional[List[PaperfliesSupplierImageSchema]]
+    site: Optional[List[PaperfliesSupplierImageSchema]]
 
 
 class PaperfliesSupplierLocationSchema(BaseModel):
-    address: str
-    country: str
+    address: Optional[str]
+    country: Optional[str]
 
 
 class PaperfliesSupplierAmenitiesSchema(BaseModel):
-    general: List[str]
-    room: List[str]
+    general: Optional[List[str]]
+    room: Optional[List[str]]
 
 
 class PaperfliesSupplierSchema(BaseModel):
@@ -27,8 +27,8 @@ class PaperfliesSupplierSchema(BaseModel):
     destination_id: int
     hotel_name: str
 
-    location: PaperfliesSupplierLocationSchema
-    details: str
-    amenities: PaperfliesSupplierAmenitiesSchema
-    images: PaperfliesSupplierImagesSchema
-    booking_conditions: List[str]
+    location: Optional[PaperfliesSupplierLocationSchema]
+    details: Optional[str]
+    amenities: Optional[PaperfliesSupplierAmenitiesSchema]
+    images: Optional[PaperfliesSupplierImagesSchema]
+    booking_conditions: Optional[List[str]]

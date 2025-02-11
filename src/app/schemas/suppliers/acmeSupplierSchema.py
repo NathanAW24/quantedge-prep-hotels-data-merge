@@ -8,9 +8,9 @@ class AcmeSupplierSchema(BaseModel):
     Name: str
     Latitude: Optional[Union[str, float]]
     Longitude: Optional[Union[str, float]]
-    Address: str
-    City: str
-    Country: str
-    PostalCode: str
-    Description: str
-    Facilities: List[str]
+    Address: Optional[str]
+    City: Optional[str]
+    Country: Optional[str]
+    PostalCode: Optional[str]
+    Description: Optional[str]
+    Facilities: Optional[List[str]]

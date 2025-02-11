@@ -3,22 +3,22 @@ from pydantic import BaseModel
 
 
 class PatagoniaSupplierImageSchema(BaseModel):
-    url: str
-    description: str
+    url: Optional[str]
+    description: Optional[str]
 
 
 class PatagoniaSupplierImagesSchema(BaseModel):
-    rooms: List[PatagoniaSupplierImageSchema]
-    amenities: List[PatagoniaSupplierImageSchema]
+    rooms: Optional[List[PatagoniaSupplierImageSchema]]
+    amenities: Optional[List[PatagoniaSupplierImageSchema]]
 
 
 class PatagoniaSupplierSchema(BaseModel):
     id: str
     destination: int
     name: str
-    lat: float
-    lng: float
+    lat: Optional[float]
+    lng: Optional[float]
     address: Optional[str]
     info: Optional[str]
     amenities: Optional[List[str]]
-    images: PatagoniaSupplierImagesSchema
+    images: Optional[PatagoniaSupplierImagesSchema]
