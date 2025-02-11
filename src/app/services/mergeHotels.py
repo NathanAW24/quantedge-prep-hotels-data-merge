@@ -23,23 +23,39 @@ class MergeHotels:
 
         merged_hotels = {}
 
-        if hotel_ids:
+        if hotel_ids and destination_id:
             for hotel_id in hotel_ids:
                 acme_hotel = next(
-                    (hotel for hotel in acme_hotels if hotel.Id == hotel_id), None)
+                    (hotel for hotel in acme_hotels if hotel.Id == hotel_id and hotel.DestinationId == destination_id), None)
                 patagonia_hotel = next(
-                    (hotel for hotel in patagonia_hotels if hotel.id == hotel_id), None)
+                    (hotel for hotel in patagonia_hotels if hotel.id == hotel_id and hotel.destination == destination_id), None)
                 paperflies_hotel = next(
-                    (hotel for hotel in paperflies_hotels if hotel.hotel_id == hotel_id), None)
+                    (hotel for hotel in paperflies_hotels if hotel.hotel_id == hotel_id and hotel.destination_id == destination_id), None)
 
                 # # sometimes values can be None
                 # print(acme_hotel)
                 # print(patagonia_hotel)
                 # print(paperflies_hotel)
 
-                
+                merged_hotels[hotel_id] = MergedHotelSchema(
+                    id=acme_hotel.Id,  # or any other
+                    destination_id=acme_hotel.DestinationId,  # or any other
+                    name=MergeHotels.merge_name_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                    location=MergeHotels.merge_location_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                    description=MergeHotels.merge_description_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                    amenities=MergeHotels.merge_amenities_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                    images=MergeHotels.merge_images_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                    booking_conditions=MergeHotels.merge_booking_conditions_data(
+                        acme_hotel=acme_hotel, patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel),
+                )
+        # print(merged_hotels)
 
-        return None
+        return list(merged_hotels.values())
 
     @staticmethod
     def merge_name_data(acme_hotel: Optional[AcmeSupplierSchema], patagonia_hotel: Optional[PatagoniaSupplierSchema], paperflies_hotel: Optional[PaperfliesSupplierSchema]) -> Optional[str]:
@@ -121,6 +137,10 @@ class MergeHotels:
                     link=amenity.url, description=amenity.description))
 
         return MergedHotelImagesSchema(rooms=rooms, site=sites, amenities=amenities)
+
+    @staticmethod
+    def merge_booking_conditions_data(acme_hotel: Optional[AcmeSupplierSchema], patagonia_hotel: Optional[PatagoniaSupplierSchema], paperflies_hotel: Optional[PaperfliesSupplierSchema]) -> Optional[List[str]]:
+        return paperflies_hotel.booking_conditions if paperflies_hotel else None
 
     @staticmethod
     def camel_to_spaces(s: str):

@@ -28,7 +28,7 @@ class MergedHotelImagesSchema(BaseModel):
 
 class MergedHotelSchema(BaseModel):
     id: str
-    destination_id: str
+    destination_id: int
     name: str
 
     location: Optional[MergedHotelLocationSchema]

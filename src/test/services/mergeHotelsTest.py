@@ -113,10 +113,12 @@ paperflies_hotel = PaperfliesSupplierSchema(**{
         "Free private parking is possible on site (reservation is not needed).",
         "Guests are required to show a photo identification and credit card upon check-in. Please note that all Special Requests are subject to availability and additional charges may apply. Payment before arrival via bank transfer is required. The property will contact you after you book to provide instructions. Please note that the full amount of the reservation is due before arrival. Resorts World Sentosa will send a confirmation with detailed payment information. After full payment is taken, the property's details, including the address and where to collect keys, will be emailed to you. Bag checks will be conducted prior to entry to Adventure Cove Waterpark. === Upon check-in, guests will be provided with complimentary Sentosa Pass (monorail) to enjoy unlimited transportation between Sentosa Island and Harbour Front (VivoCity). === Prepayment for non refundable bookings will be charged by RWS Call Centre. === All guests can enjoy complimentary parking during their stay, limited to one exit from the hotel per day. === Room reservation charges will be charged upon check-in. Credit card provided upon reservation is for guarantee purpose. === For reservations made with inclusive breakfast, please note that breakfast is applicable only for number of adults paid in the room rate. Any children or additional adults are charged separately for breakfast and are to paid directly to the hotel."
     ]
+    # "booking_conditions": None
 })
 
 
-MergeHotels.merge_hotels(hotel_ids=["iJhz", "SjyX"], destination_id=5432)
+print(MergeHotels.merge_hotels(
+    hotel_ids=["iJhz", "SjyX"], destination_id=5432))
 # print(MergeHotels.get_longest_string("aaaaa", "a", "     bbbbb"))
 # print(MergeHotels.merge_name_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
@@ -127,4 +129,6 @@ MergeHotels.merge_hotels(hotel_ids=["iJhz", "SjyX"], destination_id=5432)
 # print(MergeHotels.merge_amenities_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
 # print(MergeHotels.merge_images_data(acme_hotel=acme_hotel,
+#       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
+# print(MergeHotels.merge_booking_conditions_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
