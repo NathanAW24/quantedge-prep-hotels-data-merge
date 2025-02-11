@@ -116,7 +116,7 @@ paperflies_hotel = PaperfliesSupplierSchema(**{
 })
 
 
-# MergeHotels.merge_hotels(hotel_ids=["iJhz", "SjyX"], destination_id=5432)
+MergeHotels.merge_hotels(hotel_ids=["iJhz", "SjyX"], destination_id=5432)
 # print(MergeHotels.get_longest_string("aaaaa", "a", "     bbbbb"))
 # print(MergeHotels.merge_name_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
@@ -126,5 +126,5 @@ paperflies_hotel = PaperfliesSupplierSchema(**{
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
 # print(MergeHotels.merge_amenities_data(acme_hotel=acme_hotel,
 #       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
-print(MergeHotels.merge_images_data(acme_hotel=acme_hotel,
-      patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
+# print(MergeHotels.merge_images_data(acme_hotel=acme_hotel,
+#       patagonia_hotel=patagonia_hotel, paperflies_hotel=paperflies_hotel))
