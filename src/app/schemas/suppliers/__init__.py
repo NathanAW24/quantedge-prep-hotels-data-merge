@@ -1,0 +1,3 @@
+from .acmeSupplierSchema import AcmeSupplierSchema
+from .paperfliesSupplierSchema import PaperfliesSupplierSchema
+from .patagoniaSupplierSchema import PatagoniaSupplierSchema
