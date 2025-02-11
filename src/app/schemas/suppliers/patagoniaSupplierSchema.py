@@ -1,13 +1,16 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
+
 
 class PatagoniaSupplierImageSchema(BaseModel):
     url: str
     description: str
 
+
 class PatagoniaSupplierImagesSchema(BaseModel):
     rooms: List[PatagoniaSupplierImageSchema]
     amenities: List[PatagoniaSupplierImageSchema]
+
 
 class PatagoniaSupplierSchema(BaseModel):
     id: str
@@ -15,7 +18,7 @@ class PatagoniaSupplierSchema(BaseModel):
     name: str
     lat: float
     lng: float
-    address: str
-    info: str
-    amenities: List[str]
+    address: Optional[str]
+    info: Optional[str]
+    amenities: Optional[List[str]]
     images: PatagoniaSupplierImagesSchema
