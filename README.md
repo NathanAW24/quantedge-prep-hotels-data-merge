@@ -13,3 +13,6 @@ Run it from `src` dir, the code is mostly inside the `app`.
 ```
 uvicorn app.main:app --reload
 ```
+
+# FOR SHORT
+The main logic is in `src/app/services/mergeHotels.py`, this is where the APIs written in `src/app/utils/fetchSupplier.py` are fetched from, then the merging logic is done.
