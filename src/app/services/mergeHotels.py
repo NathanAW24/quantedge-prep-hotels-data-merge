@@ -17,9 +17,9 @@ class MergeHotels:
         paperflies_hotels: List[PaperfliesSupplierSchema] = fetch_suppliers_and_filter(
             SupplierChoice.PAPERFLIES, hotel_ids=hotel_ids, destination_id=destination_id)
 
-        print(acme_hotels)
-        print(patagonia_hotels)
-        print(paperflies_hotels)  # OK
+        # print(acme_hotels)
+        # print(patagonia_hotels)
+        # print(paperflies_hotels)  # OK
 
         merged_hotels = {}
 
