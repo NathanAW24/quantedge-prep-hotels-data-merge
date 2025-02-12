@@ -4,18 +4,27 @@ from typing import List, Optional
 from app.utils import SupplierChoice, fetch_suppliers_and_filter
 from app.schemas.suppliers import AcmeSupplierSchema, PatagoniaSupplierSchema, PaperfliesSupplierSchema
 from app.schemas import MergedHotelSchema, MergedHotelLocationSchema, MergedHotelAmenitiesSchema, MergedHotelImagesSchema, MergedHotelImageSchema
+import asyncio
+import httpx
 
 
 class MergeHotels:
     @staticmethod
-    def merge_hotels(hotel_ids: Optional[List[str]], destination_id: Optional[int]) -> Optional[List[MergedHotelSchema]]:
+    # 3 seconds without async
+    async def merge_hotels(hotel_ids: Optional[List[str]], destination_id: Optional[int]) -> Optional[List[MergedHotelSchema]]:
         # fetch the acme supplier
-        acme_hotels: List[AcmeSupplierSchema] = fetch_suppliers_and_filter(
-            SupplierChoice.ACME, hotel_ids=hotel_ids, destination_id=destination_id)
-        patagonia_hotels: List[PatagoniaSupplierSchema] = fetch_suppliers_and_filter(
-            SupplierChoice.PATAGONIA, hotel_ids=hotel_ids, destination_id=destination_id)
-        paperflies_hotels: List[PaperfliesSupplierSchema] = fetch_suppliers_and_filter(
-            SupplierChoice.PAPERFLIES, hotel_ids=hotel_ids, destination_id=destination_id)
+        async with httpx.AsyncClient() as client:
+            tasks = [
+                fetch_suppliers_and_filter(
+                    SupplierChoice.ACME, hotel_ids=hotel_ids, destination_id=destination_id),
+                fetch_suppliers_and_filter(
+                    SupplierChoice.PATAGONIA, hotel_ids=hotel_ids, destination_id=destination_id),
+                fetch_suppliers_and_filter(
+                    SupplierChoice.PAPERFLIES, hotel_ids=hotel_ids, destination_id=destination_id)
+            ]
+        # Wait for all tasks to complete
+        # AFTER PARALLELIZATION BECOME 700-800 ms
+        acme_hotels, patagonia_hotels, paperflies_hotels = await asyncio.gather(*tasks)
 
         # print(acme_hotels)
         # print(patagonia_hotels)

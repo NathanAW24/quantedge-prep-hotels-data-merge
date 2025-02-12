@@ -11,4 +11,4 @@ app = FastAPI()
 async def get_filtered_hotels(request: MergedHotelRequest):
     hotel_ids = request.hotels if request.hotels else None
     destination = request.destination if request.destination else None
-    return MergeHotels.merge_hotels(hotel_ids=hotel_ids, destination_id=destination)
+    return await MergeHotels.merge_hotels(hotel_ids=hotel_ids, destination_id=destination)

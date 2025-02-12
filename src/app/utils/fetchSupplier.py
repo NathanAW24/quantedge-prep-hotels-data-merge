@@ -6,6 +6,7 @@ from app.schemas.suppliers import (
 from pydantic import ValidationError
 from enum import Enum
 from typing import List, Optional, Union
+import asyncio
 import httpx
 from app.schemas.suppliers import AcmeSupplierSchema, PatagoniaSupplierSchema, PaperfliesSupplierSchema
 
@@ -36,14 +37,14 @@ SupplierSchemasType = Union[
 ]
 
 
-def fetch_supplier(supplier: SupplierChoice) -> SupplierSchemasType:
+async def fetch_supplier(supplier: SupplierChoice) -> SupplierSchemasType:
     supplier_url = f"{BASE_URL}/{supplier.value}"
     print(f"Fetching data from: {supplier_url}")
 
-    response = httpx.get(supplier_url)
-    response.raise_for_status()
-
-    data = response.json()
+    async with httpx.AsyncClient() as client:
+        response = await client.get(supplier_url)
+        response.raise_for_status()
+        data = response.json()
 
     # Mapping supplier choice to the correct schema
     schema_map = {
@@ -66,8 +67,8 @@ def fetch_supplier(supplier: SupplierChoice) -> SupplierSchemasType:
         return []  # Or handle errors differently
 
 
-def fetch_suppliers_and_filter(supplier: SupplierChoice, hotel_ids: Optional[List[str]], destination_id: Optional[int]) -> SupplierSchemasType:
-    unfiltered_hotels = fetch_supplier(supplier)
+async def fetch_suppliers_and_filter(supplier: SupplierChoice, hotel_ids: Optional[List[str]], destination_id: Optional[int]) -> SupplierSchemasType:
+    unfiltered_hotels = await fetch_supplier(supplier)
 
     match supplier.value:
         case SupplierChoice.ACME:
