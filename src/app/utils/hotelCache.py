@@ -1,4 +1,3 @@
-from functools import lru_cache
 from typing import List, Optional
 from app.schemas import MergedHotelSchema
 from datetime import datetime, timedelta
